@@ -1,3 +1,9 @@
+@import './components/Kennel.css';
+@import './components/animal/Animals.css';
+@import './components/locations/Location.css';
+@import './components/customers/Customer.css';
+@import './components/employees/Employee.css';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
