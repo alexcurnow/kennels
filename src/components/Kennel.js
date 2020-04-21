@@ -1,34 +1,37 @@
 import React from 'react'
-import Animal from './animal/Animal'
-import Location from './locations/Location'
-import Customer from './customers/Customer'
-import Employee from './employees/Employee'
+import LocationList from './locations/LocationList'
+import { LocationProvider } from './locations/LocationProvider'
+import './Kennel.css'
+import { AnimalProvider } from './animals/animalProvider'
+import AnimalList from './animals/AnimalList'
+import { CustomerProvider } from './customers/customerProvider'
+import CustomerList from './customers/CustomerList'
+import { EmployeeProvider } from './employees/employeeProvider'
+import EmployeeList from './employees/EmployeeList'
 
 export default () => (
   <>
     <h2>Nashville Kennels</h2>
     <small>Loving care when you're not there.</small>
-    <address>
-      <div>Visit Us at the Nashville North Location</div>
-      <div>500 Puppy Way</div>
-    </address>
-    <h2>Animals</h2>
-    <article className="animals">
-      <Animal />
-      <Animal />
-      <Animal />
-    </article>
+
     <h2>Locations</h2>
-    <article className="locations">
-      <Location />
-    </article>
+    <LocationProvider>
+      <LocationList />
+    </LocationProvider>
+
+    <h2>Animals</h2>
+    <AnimalProvider>
+      <AnimalList />
+    </AnimalProvider>
+
     <h2>Customers</h2>
-    <article className="customers">
-      <Customer />
-    </article>
+    <CustomerProvider>
+      <CustomerList />
+    </CustomerProvider>
+
     <h2>Employees</h2>
-    <article className="employees">
-      <Employee />
-    </article>
+    <EmployeeProvider>
+      <EmployeeList />
+    </EmployeeProvider>
   </>
 )
