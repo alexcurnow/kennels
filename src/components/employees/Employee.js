@@ -1,13 +1,11 @@
 import React from 'react'
 
-export default (props) => (
+export default ({ employee, location }) => (
   <>
     <section className="employee">
-      <h3 className="employee__name">{props.employee.name}</h3>
-      <div className="employee__address">{props.employee.address}</div>
-      <div className="employee__location">
-        LocationId: {props.employee.locationId}
-      </div>
+      <h3 className="employee__name">{employee.name}</h3>
+      <div className="employee__address">Address: {employee.address}</div>
+      <div className="employee__location">Location: {location.name}</div>
     </section>
   </>
 )
