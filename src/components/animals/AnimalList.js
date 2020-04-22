@@ -1,34 +1,50 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AnimalsContext } from './animalProvider'
 import Animal from './Animal'
 import './Animals.css'
 import { LocationContext } from '../locations/LocationProvider'
 import { CustomerContext } from '../customers/customerProvider'
+import { Modal, ModalHeader, ModalBody } from 'reactstrap'
+import AnimalForm from './AnimalForm'
 
 export default () => {
   const { animals } = useContext(AnimalsContext)
   const { locations } = useContext(LocationContext)
   const { customers } = useContext(CustomerContext)
 
-  return (
-    <div className="animals">
-      {animals.map((animal) => {
-        const matchingLoc = locations.find(
-          (loc) => loc.id === animal.locationId
-        )
-        const matchingCus = customers.find(
-          (cus) => cus.id === animal.customerId
-        )
+  const [modal, setModal] = useState(false)
+  const toggle = () => setModal(!modal)
 
-        return (
-          <Animal
-            key={animal.id}
-            animal={animal}
-            location={matchingLoc}
-            customer={matchingCus}
-          />
-        )
-      })}
-    </div>
+  return (
+    <>
+      <div className="fakeLink href" onClick={toggle}>
+        New Animal
+      </div>
+      <div className="animals">
+        {animals.map((animal) => {
+          const matchingLoc = locations.find(
+            (loc) => loc.id === animal.locationId
+          )
+          const matchingCus = customers.find(
+            (cus) => cus.id === animal.customerId
+          )
+
+          return (
+            <Animal
+              key={animal.id}
+              animal={animal}
+              location={matchingLoc}
+              customer={matchingCus}
+            />
+          )
+        })}
+      </div>
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>New Animal</ModalHeader>
+        <ModalBody>
+          <AnimalForm toggler={toggle} />
+        </ModalBody>
+      </Modal>
+    </>
   )
 }
