@@ -18,7 +18,7 @@ export default () => {
   return (
     <>
       <div className="fakeLink href" onClick={toggle}>
-        New Animal
+        Make Appointment
       </div>
       <div className="animals">
         {animals.map((animal) => {

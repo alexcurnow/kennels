@@ -2,25 +2,24 @@ import React, { useContext, useRef } from 'react'
 import { LocationContext } from '../locations/LocationProvider'
 import { AnimalsContext } from './animalProvider'
 import './Animals.css'
-import { CustomerContext } from '../customers/customerProvider'
 
 export default (props) => {
   const { addAnimal } = useContext(AnimalsContext)
   const { locations } = useContext(LocationContext)
-  const { customers } = useContext(CustomerContext)
 
   const name = useRef()
   const location = useRef()
-  const customer = useRef()
+  const breed = useRef()
 
   const constructNewAnimal = () => {
     const locationId = parseInt(location.current.value)
-    const customerId = parseInt(customer.current.value)
+    const customerId = parseInt(localStorage.getItem('kennel_customer'))
     if (locationId === 0) {
       window.alert('Please select a location')
     } else {
       addAnimal({
         name: name.current.value,
+        breed: breed.current.value,
         locationId: locationId,
         customerId: customerId,
       }).then(props.toggler)
@@ -46,21 +45,16 @@ export default (props) => {
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="animalCustomer">Assign owner: </label>
-          <select
-            defaultValue=""
-            name="customer"
-            ref={customer}
-            id="animalCustomer"
+          <label htmlFor="animalBreed">Breed: </label>
+          <input
+            type="text"
+            id="animalBreed"
+            ref={breed}
+            required
+            autoFocus
             className="form-control"
-          >
-            <option value="0">Select a customer</option>
-            {customers.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+            placeholder="Animal breed"
+          />
         </div>
       </fieldset>
       <fieldset>
