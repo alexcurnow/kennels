@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import * as serviceWorker from './serviceWorker'
 import Kennel from './components/Kennel'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 ReactDOM.render(<Kennel />, document.getElementById('root'))
 
