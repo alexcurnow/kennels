@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react'
 import { LocationContext } from '../locations/LocationProvider'
-import { AnimalsContext } from './animalProvider'
+import { AnimalsContext } from './AnimalProvider'
 import './Animals.css'
 
 export default (props) => {

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { AnimalsContext } from './animalProvider'
+import { AnimalsContext } from './AnimalProvider'
 import Animal from './Animal'
 import './Animals.css'
 import { LocationContext } from '../locations/LocationProvider'
-import { CustomerContext } from '../customers/customerProvider'
+import { CustomerContext } from '../customer/CustomerProvider'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 import AnimalForm from './AnimalForm'
 
