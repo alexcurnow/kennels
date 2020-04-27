@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Dashboard from './Dashboard'
 import Auth from './auth/Auth'
+import './Kennel.css'
 
 export default () => {
   const [check, update] = useState(false)

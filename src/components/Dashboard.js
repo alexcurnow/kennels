@@ -29,8 +29,6 @@ export default () => {
                 <small>Loving care when you're not there.</small>
                 <h2>Locations</h2>
                 <LocationList />
-                <h2>Animals</h2>
-                <AnimalList searchTerms={searchTerms} />
                 <h2>Customers</h2>
                 <CustomerList />
                 <h2>Employees</h2>

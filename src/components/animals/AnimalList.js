@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { AnimalsContext } from './AnimalProvider'
-import Animal from './Animal'
+import { Animal } from './Animal'
 import './Animals.css'
 import { LocationContext } from '../locations/LocationProvider'
 import { CustomerContext } from '../customer/CustomerProvider'
