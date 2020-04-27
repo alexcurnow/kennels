@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { AnimalsContext } from '../animals/AnimalProvider'
+import { AnimalsContext } from '../animals/animalProvider'
 import { Animal } from '../animals/Animal'
 import { CustomerContext } from '../customer/CustomerProvider'
 import { LocationContext } from '../locations/LocationProvider'
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
+import { AnimalForm } from '../animals/AnimalForm'
 
 export const SearchResults = ({ searchTerms }) => {
   const { animals, releaseAnimal } = useContext(AnimalsContext)
@@ -19,6 +20,9 @@ export const SearchResults = ({ searchTerms }) => {
 
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
+
+  const [editModal, setEditModal] = useState(false)
+  const toggleEdit = () => setEditModal(!editModal)
 
   useEffect(() => {
     if (searchTerms !== '') {
@@ -58,6 +62,15 @@ export const SearchResults = ({ searchTerms }) => {
         </ModalBody>
         <ModalFooter>
           <Button
+            color="info"
+            onClick={() => {
+              toggleEdit()
+              toggle()
+            }}
+          >
+            Edit
+          </Button>
+          <Button
             color="danger"
             onClick={() => {
               releaseAnimal(selectedAnimal.animal.id)
@@ -67,6 +80,19 @@ export const SearchResults = ({ searchTerms }) => {
             Delete
           </Button>
         </ModalFooter>
+      </Modal>
+
+      <Modal isOpen={editModal} toggle={toggleEdit}>
+        <ModalHeader toggle={toggleEdit}>
+          {selectedAnimal.animal.name}
+        </ModalHeader>
+        <ModalBody>
+          <AnimalForm
+            key={selectedAnimal.animal.id}
+            toggleEdit={toggleEdit}
+            {...selectedAnimal}
+          />
+        </ModalBody>
       </Modal>
     </div>
   )
