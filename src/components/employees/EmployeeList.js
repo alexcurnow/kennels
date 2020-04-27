@@ -5,7 +5,7 @@ import { LocationContext } from '../locations/LocationProvider'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 import EmployeeForm from './EmployeeForm'
 
-export default () => {
+export const EmployeeList = () => {
   const { employees } = useContext(EmployeeContext)
   const { locations } = useContext(LocationContext)
 
