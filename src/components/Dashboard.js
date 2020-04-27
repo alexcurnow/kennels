@@ -10,6 +10,7 @@ import { SearchBar } from './search/SearchBar'
 import { SearchResults } from './search/SearchResults'
 import './Layout.css'
 import './Kennel.css'
+import './employees/Employee.css'
 
 export const Dashboard = () => {
   const [searchTerms, setTerms] = useState(null)

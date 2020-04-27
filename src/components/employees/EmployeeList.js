@@ -2,15 +2,25 @@ import React, { useContext, useState } from 'react'
 import { EmployeeContext } from './EmployeeProvider'
 import Employee from './Employee'
 import { LocationContext } from '../locations/LocationProvider'
-import { Modal, ModalHeader, ModalBody } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody, Button } from 'reactstrap'
 import EmployeeForm from './EmployeeForm'
+import { EditEmployeeForm } from './EditEmployeeForm'
+import './Employee.css'
 
 export const EmployeeList = () => {
   const { employees } = useContext(EmployeeContext)
   const { locations } = useContext(LocationContext)
 
+  const [selectedEmployee, setEmployee] = useState({
+    employee: { id: 0 },
+    location: null,
+  })
+
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
+
+  const [editModal, setEditModal] = useState(false)
+  const toggleEdit = () => setEditModal(!editModal)
 
   return (
     <>
@@ -24,11 +34,26 @@ export const EmployeeList = () => {
             (loc) => employee.locationId === loc.id
           )
           return (
-            <Employee
-              key={employee.id}
-              employee={employee}
-              location={foundLocation}
-            />
+            <>
+              <Employee
+                key={employee.id}
+                employee={employee}
+                location={foundLocation}
+              />
+              <Button
+                color="info"
+                className="editEmployee"
+                onClick={() => {
+                  const location = locations.find(
+                    (l) => l.id === employee.locationId
+                  )
+                  setEmployee(employee, location)
+                  toggleEdit()
+                }}
+              >
+                Edit employee info
+              </Button>
+            </>
           )
         })}
       </div>
@@ -37,6 +62,17 @@ export const EmployeeList = () => {
         <ModalHeader toggle={toggle}>New Employee</ModalHeader>
         <ModalBody>
           <EmployeeForm toggler={toggle} />
+        </ModalBody>
+      </Modal>
+
+      <Modal isOpen={editModal} toggle={toggleEdit}>
+        <ModalHeader toggle={toggleEdit}>{selectedEmployee.name}</ModalHeader>
+        <ModalBody>
+          <EditEmployeeForm
+            key={selectedEmployee.id}
+            toggleEdit={toggleEdit}
+            {...selectedEmployee}
+          />
         </ModalBody>
       </Modal>
     </>
