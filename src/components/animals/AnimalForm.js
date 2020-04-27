@@ -1,71 +1,80 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useState } from 'react'
 import { LocationContext } from '../locations/LocationProvider'
-import { AnimalsContext } from './AnimalProvider'
+import { AnimalsContext } from './animalProvider'
 import './Animals.css'
 
-export default (props) => {
-  const { addAnimal } = useContext(AnimalsContext)
+export const AnimalForm = ({ animal, customer, toggleEdit }) => {
   const { locations } = useContext(LocationContext)
+  const { updateAnimal } = useContext(AnimalsContext)
 
-  const name = useRef()
-  const location = useRef()
-  const breed = useRef()
+  // Separate state variable to track the animal as it is edited
+  const [updatedAnimal, setAnimal] = useState(animal)
 
-  const constructNewAnimal = () => {
-    const locationId = parseInt(location.current.value)
-    const customerId = parseInt(localStorage.getItem('kennel_customer'))
+  /*
+      When changing a state object or array, always create a new one
+      and change state instead of modifying current one
+  */
+  const handleControlledInputChange = (event) => {
+    const newAnimal = Object.assign({}, updatedAnimal)
+    newAnimal[event.target.name] = event.target.value
+    setAnimal(newAnimal)
+  }
+
+  const editAnimal = () => {
+    const locationId = parseInt(updatedAnimal.locationId)
+
     if (locationId === 0) {
       window.alert('Please select a location')
     } else {
-      addAnimal({
-        name: name.current.value,
-        breed: breed.current.value,
+      updateAnimal({
+        id: updatedAnimal.id,
+        name: updatedAnimal.name,
+        breed: updatedAnimal.breed,
         locationId: locationId,
-        customerId: customerId,
-      }).then(props.toggler)
+        customerId: parseInt(localStorage.getItem('kennel_customer')),
+      }).then(toggleEdit)
     }
   }
 
   return (
     <form className="animalForm">
-      <h2 className="animalForm__title">New Animal</h2>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="animalName">Animal name: </label>
+          <label htmlFor="name">Animal name: </label>
           <input
             type="text"
-            id="animalName"
-            ref={name}
+            name="name"
             required
             autoFocus
             className="form-control"
             placeholder="Animal name"
+            defaultValue={animal.name}
+            onChange={handleControlledInputChange}
           />
         </div>
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="animalBreed">Breed: </label>
+          <label htmlFor="breed">Animal breed: </label>
           <input
             type="text"
-            id="animalBreed"
-            ref={breed}
+            name="breed"
             required
-            autoFocus
             className="form-control"
             placeholder="Animal breed"
+            defaultValue={animal.breed}
+            onChange={handleControlledInputChange}
           />
         </div>
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="location">Assign to location: </label>
+          <label htmlFor="locationId">Location: </label>
           <select
-            defaultValue=""
-            name="location"
-            ref={location}
-            id="animalLocation"
+            name="locationId"
             className="form-control"
+            defaultValue={animal.locationId}
+            onChange={handleControlledInputChange}
           >
             <option value="0">Select a location</option>
             {locations.map((e) => (
@@ -76,15 +85,27 @@ export default (props) => {
           </select>
         </div>
       </fieldset>
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="customer">Customer:</label>
+          <input
+            type="text"
+            name="customer"
+            disabled
+            className="form-control"
+            defaultValue={customer.name}
+          />
+        </div>
+      </fieldset>
       <button
         type="submit"
-        onClick={(evt) => {
-          evt.preventDefault() // Prevent browser from submitting the form
-          constructNewAnimal()
-        }}
         className="btn btn-primary"
+        onClick={(evt) => {
+          evt.preventDefault()
+          editAnimal()
+        }}
       >
-        Save Animal
+        Save Updates
       </button>
     </form>
   )

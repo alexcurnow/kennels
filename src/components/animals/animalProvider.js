@@ -33,6 +33,15 @@ export const AnimalProvider = (props) => {
       method: 'DELETE',
     }).then(getAnimals)
 
+  const updateAnimal = (animal) =>
+    fetch(`http://localhost:8088/animals/${animal.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(animal),
+    }).then(getAnimals)
+
   /*
         Load all animals when the component is mounted. Ensure that
         an empty array is the second argument to avoid infinite loop.
@@ -51,6 +60,7 @@ export const AnimalProvider = (props) => {
         animals,
         addAnimal,
         releaseAnimal,
+        updateAnimal,
       }}
     >
       {props.children}
